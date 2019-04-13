@@ -24,6 +24,7 @@ public class hw {
          array1[array1.length-i-1] = x;
          }
     }
+
     public static void problem2 () {
         System.out.println ("--------------------Q2--------------------");
         int [][] array2 = {
@@ -56,12 +57,9 @@ public class hw {
             array3[i] = Integer.parseInt(args[i]);
         }
         Arrays.sort(array3);
-
-
-          System.out.println("The median is: " + array3[array3.length/2]);
-
-
+        System.out.println("The median is: " + array3[array3.length/2]);
     }
+
     public static void problem5 () {
         System.out.println ("\n--------------------Q5--------------------");
         int lockerSize = 100;

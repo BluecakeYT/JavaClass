@@ -7,6 +7,6 @@ public class Test {
     Fish f = new Fish();
     f.eat();
     f.move();
-    f.label();
+    f.label(); 
   }
 }

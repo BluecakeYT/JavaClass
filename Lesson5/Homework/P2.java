@@ -16,7 +16,7 @@ class User {
     password = p;
   }
   public String login () {
-    return "Your ID is: " + userid + " | Your password is: " + password;
+    return "Login Succcessful!";
   }
 }
 
@@ -35,7 +35,7 @@ class Customer extends User {
     customerid = c;
   }
   public String purchase() {
-    return "Purchase successful!";
+    return "";
   }
 }
 

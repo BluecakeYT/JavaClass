@@ -44,7 +44,13 @@ class Student {
     nextIndex++;
   }
   public void printGrades() {
-    System.out.println (grades);
+    String gradeList = "";
+    for (int i = 0; i < grades.length; i++) {
+      if (courses[i] != null) {
+      gradeList += " Course " + (i + 1) + ":" + grades[i];
+      }
+    }
+    System.out.println(gradeList);
   }
   public double getAverageGrade() {
       int sum = 0;

@@ -37,11 +37,16 @@ class Student {
  }
   public String toString() {
     return name + " (" + address + ")";
-  }
+  }``
   public void addCourseGrade(String course, int grade) {
-    courses[nextIndex] = course;
-    grades[nextIndex] = grade;
-    nextIndex++;
+     if (nextIndex != 30) {
+       courses[nextIndex] = course;
+       grades[nextIndex] = grade;
+       nextIndex++;
+     } else {
+       System.out.println ("You added too many courses lol");
+     }
+
   }
   public void printGrades() {
     String gradeList = "";

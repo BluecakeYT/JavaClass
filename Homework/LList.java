@@ -7,42 +7,41 @@ public class LList {
    }
    public boolean add(Integer value) {
        Node node1 = new Node(value);
-            node1.next = null;
 
-            if (start == null) {
-               start = node1;
-            }
-            else {
-                Node last = new Node (end.getData());
-                while (last.next != null) {
-                     last = last.next;
-                }
-                last.next = node1;
-            }
-            return true;
+       if (start == null) {
+           start = node1;
+           end = node1;
+           }
+           else {
+           end.next = node1;
+           node1.prev = end;
+           end = node1;
+           }
+           length++;
+           return true;
    }
    public int size() {
    return length;
    }
    public String toString() {
-     //what do you do here
-     return "what do I do lmao";
+     return "Start: " + start + " End: " + end + " Length: " + length;
    }
    public Integer get(int index) {
        if (index < 0 || index > size()) {
-            return -1;
+            return null;
        }
-       Node n = new Node(0);
-       for (int i = 0; i < index; i++) {
-            n = n.next();
+
+       Node tempFirst = start;
+       for (int i = 0; i < index - 1; i++) {
+            tempFirst = tempFirst.next();
        }
-       return n.getData();
+       return tempFirst.getData();
    }
    public Integer set(int index, Integer value) {
        if (index < 0 || index > size()) {
-           return -1;
+           return null;
        }
-       Node n = new Node(0);
+       Node n = start;
        for (int i = 0; i < index - 1; i++) {
            n = n.next();
        }
@@ -51,8 +50,8 @@ public class LList {
    }
    public boolean contains(Integer value) {
        boolean bool = false;
-       Node r = new Node (0);
-       while (r.next != null) {
+       Node r = start;
+       while (r != null) {
             if (r.getData() == value) {
                 bool = true;
                 break;
@@ -63,52 +62,114 @@ public class LList {
 
    }
    public int indexOf(Integer value) {
-       int index = -1;
-       Node r = new Node (0);
-       while (r.next != null) {
+       int index = 0;
+       Node r = start;
+       while (r != null) {
             index++;
             if (r.getData() == value) {
                 break;
             }
+
             r = r.next;
+
        }
+       if (index == length && end.getData() != value) {
+         index = -1;
+       }
+
        return index;
    }
-   public void add(int index,Integer value) {
-     Node n = new Node(0);
+   public void add(int index, Integer value) {
+     if (index > 0 && index <= size()) {
+     Node n = new Node(value);
+     Node p = start;
      for (int i = 0; i < index - 1; i++) {
-         n = n.next();
+        p = p.next();
      }
-     n.setData(value);
-
+     if (p != start) {
+     p.prev().setNext(n);
+     n.setPrev(p.prev());
+   } else {
+     start = n;
+   }
+     n.setNext(p);
+     p.setPrev(n);
+     length++;
+     }
      }
 
    public Integer remove(int index) {
      if (index < 0 || index > size()) {
-         return -1;
+         return null;
      }
-      Node n = new Node(0);
+      Node n = start;
       for (int i = 0; i < index - 1; i++) {
+
           n = n.next();
       }
-      n.setData(null);
-      return n.getData();
+      Integer g = n.getData();
+
+
+      if (n != start) {
+        n.prev().setNext(n.next());
+      } else {
+        start = n.next();
+      }
+      if (n != end) {
+        n.next().setPrev(n.prev());
+      } else {
+        end = n.prev();
+      }
+      if (n == start && n == end) {
+        n.setData(null);
+        n.setPrev(null);
+        n.setNext(null);
+      }
+      length--;
+      return g;
     }
    public boolean remove(Integer value) {
-     Node node1 = new Node(value);
-          node1.next = null;
+     Node n = start;
+     for (int i = 0; i < indexOf(value) - 1; i++) {
+       n = n.next();
 
-          if (start == null) {
-              start = null;
-          }
-          else {
-              Node last = new Node (end.getData());
-              while (last.next != null) {
-                   last = last.next;
-              }
-              last.next = null;
-          }
-          return true;
+     }
+     if (n != start) {
+       n.prev().setNext(n.next());
+     } else {
+       start = n.next();
+     }
+     if (n != end) {
+       n.next().setPrev(n.prev());
+     } else {
+       end = n.prev();
+     }
+     if (n == start && n == end) {
+       n.setData(null);
+       n.setPrev(null);
+       n.setNext(null);
+     }
+     length--;
+     return true;
+  }
+  public static void main(String[] args) {
+    Integer rem = 2;
+    LList list = new LList();
+    list.add(2);
+    list.add(3);
+    list.add(23);
+    list.add(3, 7);
+    list.remove(rem);
+    Node s = list.start;
+    for (int i = 0; i < list.size(); i++) {
+      Integer g = s.getData();
+      System.out.println(g);
+      s = s.next();
+    }
+    list.set(1, 9);
+    System.out.println(list.get(1));
+    System.out.println(list.indexOf(23));
+
   }
 
 }
@@ -143,6 +204,6 @@ class Node {
    }
    public String toString() {
      //what do you do here
-     return "what do I do lmao";
+     return "Next: " + next + " Prev: " + prev + " Data: " + data;
    }
 }
